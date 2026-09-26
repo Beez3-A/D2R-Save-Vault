@@ -1,0 +1,112 @@
+<ui:FluentWindow x:Class="D2RSaveVault.Views.MainWindow"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+                 xmlns:vm="clr-namespace:D2RSaveVault.ViewModels"
+                 xmlns:views="clr-namespace:D2RSaveVault.Views"
+                 xmlns:tb="http://www.hardcodet.net/taskbar"
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 mc:Ignorable="d"
+                 d:DataContext="{d:DesignInstance vm:MainViewModel}"
+                 Title="D2R Save Vault"
+                 Width="1040" Height="720"
+                 MinWidth="900" MinHeight="600"
+                 WindowBackdropType="Mica"
+                 ExtendsContentIntoTitleBar="True"
+                 Icon="pack://application:,,,/Assets/AppIcon.ico"
+                 Background="{StaticResource InfernalWindowBackgroundBrush}"
+                 WindowStartupLocation="CenterScreen">
+
+    <Grid Background="{StaticResource InfernalWindowBackgroundBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <ui:TitleBar x:Name="AppTitleBar"
+                     Grid.Row="0"
+                     Title="D2R Save Vault"
+                     ShowMinimize="True"
+                     ShowMaximize="True"
+                     ShowClose="True"
+                     CanMaximize="True"
+                     CloseWindowByDoubleClickOnIcon="True">
+            <ui:TitleBar.Icon>
+                <ui:ImageIcon Source="pack://application:,,,/Assets/AppIcon_256.png" />
+            </ui:TitleBar.Icon>
+        </ui:TitleBar>
+
+        <tb:TaskbarIcon x:Name="Tray"
+                        ToolTipText="D2R Save Vault"
+                        TrayMouseDoubleClick="Tray_OnDoubleClick"
+                        IconSource="pack://application:,,,/Assets/AppIcon.ico">
+            <tb:TaskbarIcon.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Open" Click="TrayOpen_OnClick" />
+                    <MenuItem Header="Backup now" Click="TrayBackupNow_OnClick" />
+                    <Separator />
+                    <MenuItem Header="Exit" Click="TrayExit_OnClick" />
+                </ContextMenu>
+            </tb:TaskbarIcon.ContextMenu>
+        </tb:TaskbarIcon>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="228" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="0" Background="{StaticResource InfernalSidebarBrush}">
+                <Grid Margin="0,4,0,12">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="16,10,16,16">
+                        <Image Source="pack://application:,,,/Assets/AppIcon_256.png" Width="34" Height="34" />
+                        <StackPanel Margin="10,0,0,0" VerticalAlignment="Center">
+                            <TextBlock Text="Save Vault" FontWeight="Bold" FontSize="16" />
+                            <TextBlock Text="Diablo II: Resurrected" FontSize="11"
+                                       Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="1">
+                        <RadioButton Style="{StaticResource NavItem}" GroupName="Nav"
+                                     IsChecked="{Binding SelectedSection, Mode=TwoWay, Converter={StaticResource EnumToBool}, ConverterParameter=Backups}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="◆" Width="24" Margin="0,0,12,0" TextAlignment="Center" />
+                                <TextBlock Text="Backups" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </RadioButton>
+
+                        <RadioButton Style="{StaticResource NavItem}" GroupName="Nav"
+                                     IsChecked="{Binding SelectedSection, Mode=TwoWay, Converter={StaticResource EnumToBool}, ConverterParameter=Options}">
+                            <StackPanel Orientation="Horizontal">
+                                <ui:SymbolIcon Symbol="Settings24" Margin="0,0,12,0" />
+                                <TextBlock Text="Options" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </RadioButton>
+
+                        <RadioButton Style="{StaticResource NavItem}" GroupName="Nav"
+                                     IsChecked="{Binding SelectedSection, Mode=TwoWay, Converter={StaticResource EnumToBool}, ConverterParameter=About}">
+                            <StackPanel Orientation="Horizontal">
+                                <ui:SymbolIcon Symbol="Info24" Margin="0,0,12,0" />
+                                <TextBlock Text="About" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </RadioButton>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <Grid Grid.Column="1" Margin="0">
+                <views:BackupsPage Visibility="{Binding SelectedSection, Converter={StaticResource EnumToVis}, ConverterParameter=Backups}" />
+                <views:OptionsPage Visibility="{Binding SelectedSection, Converter={StaticResource EnumToVis}, ConverterParameter=Options}" />
+                <views:AboutPage Visibility="{Binding SelectedSection, Converter={StaticResource EnumToVis}, ConverterParameter=About}" />
+            </Grid>
+        </Grid>
+    </Grid>
+</ui:FluentWindow>

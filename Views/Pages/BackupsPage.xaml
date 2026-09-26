@@ -1,0 +1,180 @@
+<UserControl x:Class="D2RSaveVault.Views.BackupsPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             xmlns:vm="clr-namespace:D2RSaveVault.ViewModels"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance vm:MainViewModel}"
+             d:DesignHeight="640" d:DesignWidth="800">
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+        <StackPanel Margin="24,16,24,24" MaxWidth="760" HorizontalAlignment="Left">
+            <TextBlock Text="Backups" Style="{StaticResource SectionTitle}" FontSize="26" />
+            <TextBlock Style="{StaticResource SectionCaption}"
+                       Text="Automatic full-folder backups for your Diablo II: Resurrected saves, with configurable retention and safe restore." />
+
+            <Border Style="{StaticResource GlassCard}" Margin="0,4,0,14">
+                <StackPanel>
+                    <TextBlock Text="Automatic backups" FontWeight="SemiBold" Margin="0,0,0,10" />
+
+                    <Grid Margin="0,2,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="84" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Button Grid.Column="0" Width="66" Height="66" HorizontalAlignment="Left"
+                                Background="Transparent" BorderThickness="0" Padding="0"
+                                Cursor="Hand" Click="ToggleBackups_OnClick"
+                                ToolTip="Enable or disable automatic backups">
+                            <Grid Width="50" Height="50">
+                                <Image Source="pack://application:,,,/Assets/Backup/BackupEnabled.png"
+                                       Stretch="Uniform"
+                                       SnapsToDevicePixels="True"
+                                       RenderOptions.BitmapScalingMode="Fant"
+                                       Visibility="{Binding Backup.IsAutomaticBackupsRunning, Converter={StaticResource BoolToVis}}" />
+                                <Image Source="pack://application:,,,/Assets/Backup/BackupDisabled.png"
+                                       Stretch="Uniform"
+                                       SnapsToDevicePixels="True"
+                                       RenderOptions.BitmapScalingMode="Fant"
+                                       Visibility="{Binding Backup.IsAutomaticBackupsRunning, Converter={StaticResource BoolToVis}, ConverterParameter=Invert}" />
+                            </Grid>
+                        </Button>
+
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                            <TextBlock Text="Backup status" FontWeight="SemiBold" />
+                            <TextBlock Text="{Binding Backup.StatusText}" Margin="0,4,0,0"
+                                       TextWrapping="Wrap"
+                                       Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid Margin="0,8">
+                        <StackPanel Margin="0,0,90,0">
+                            <TextBlock Text="Enable automatic backups" />
+                            <TextBlock Text="When Bind backups to D2R is enabled, this arms the backup timer so it starts with D2R and stops when D2R exits."
+                                       FontSize="12" TextWrapping="Wrap"
+                                       Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+                        </StackPanel>
+                        <ui:ToggleSwitch HorizontalAlignment="Right" VerticalAlignment="Center"
+                                         IsChecked="{Binding Settings.AutoStartBackups, Mode=TwoWay}"
+                                         Click="AutoStart_OnChanged" />
+                    </Grid>
+
+                    <Grid Margin="0,10,0,4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Text="Backup interval" />
+                            <TextBlock Text="Choose how often a scheduled backup is created while backups are running."
+                                       FontSize="12" Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                            <TextBox x:Name="IntervalValueBox" Width="76" MinHeight="36" VerticalContentAlignment="Center"
+                                     TextAlignment="Center" Margin="0,0,10,0" Padding="8,5"
+                                     LostFocus="IntervalValue_OnLostFocus" />
+                            <ComboBox x:Name="IntervalUnitCombo" Width="136" MinHeight="36"
+                                      Padding="10,4" VerticalContentAlignment="Center"
+                                      ItemsSource="{Binding BackupIntervalUnits}"
+                                      SelectedItem="{Binding Settings.BackupIntervalUnit, Mode=TwoWay}"
+                                      SelectionChanged="IntervalUnit_OnChanged" />
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid Margin="0,12,0,2">
+                        <StackPanel>
+                            <TextBlock Text="Maximum backups to keep" />
+                            <TextBlock Text="Older backups are deleted after this limit is reached."
+                                       FontSize="12" Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <Button Width="32" Height="30" Content="−" Click="DecreaseRetention_OnClick" />
+                            <TextBlock Width="52" TextAlignment="Center" VerticalAlignment="Center"
+                                       FontWeight="SemiBold" Text="{Binding Settings.MaxBackups}" />
+                            <Button Width="32" Height="30" Content="+" Click="IncreaseRetention_OnClick" />
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <Border Style="{StaticResource GlassCard}" Margin="0,0,0,14">
+                <StackPanel>
+                    <TextBlock Text="Folders" FontWeight="SemiBold" Margin="0,0,0,10" />
+
+                    <TextBlock Text="D2R save folder" />
+                    <Grid Margin="0,5,0,12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox Text="{Binding Settings.BackupSavePath, Mode=OneWay}" IsReadOnly="True"
+                                 VerticalContentAlignment="Center" Padding="7,4" />
+                        <ui:Button Grid.Column="1" Margin="8,0,0,0" Content="Browse..." Click="BrowseSaveFolder_OnClick" />
+                    </Grid>
+
+                    <TextBlock Text="Backup folder" />
+                    <Grid Margin="0,5,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox x:Name="BackupFolderBox"
+                                 Text="{Binding Backup.BackupRootPath, Mode=OneWay}"
+                                 IsReadOnly="True"
+                                 VerticalContentAlignment="Center" Padding="7,5" Cursor="Hand"
+                                 ToolTip="Click here or use Browse to choose where backups are stored"
+                                 PreviewMouseLeftButtonDown="BackupFolderBox_OnMouseDown" />
+                        <ui:Button Grid.Column="1" Margin="8,0,0,0" Content="Browse..." Click="BrowseBackupFolder_OnClick" />
+                    </Grid>
+                    <TextBlock Margin="0,6,0,0" FontSize="11" TextWrapping="Wrap"
+                               Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                               Text="The selected target path is shown above immediately after Browse. Choose a folder outside the D2R save folder to avoid recursive backups." />
+                </StackPanel>
+            </Border>
+
+            <Border Style="{StaticResource GlassCard}" Margin="0,0,0,14">
+                <StackPanel>
+                    <TextBlock Text="Manual backup &amp; restore" FontWeight="SemiBold" Margin="0,0,0,10" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <ui:Button Grid.Column="0" Content="Backup now" Margin="0,0,12,0"
+                                   Click="BackupNow_OnClick" />
+
+                        <ComboBox x:Name="RestoreCombo" Grid.Column="1" MinWidth="260"
+                                  ItemsSource="{Binding Backup.AvailableBackups}"
+                                  ToolTip="Select a backup to restore" />
+
+                        <ui:Button Grid.Column="2" Content="Restore" Margin="12,0,0,0"
+                                   Click="Restore_OnClick" />
+                    </Grid>
+                    <TextBlock Margin="0,10,0,0" FontSize="12" TextWrapping="Wrap"
+                               Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                               Text="Selecting a backup never starts a restore by itself. Restore only begins after you click Restore and confirm. A safety snapshot is created first." />
+                </StackPanel>
+            </Border>
+
+            <Border Style="{StaticResource GlassCard}">
+                <StackPanel>
+                    <TextBlock Text="Activity" FontWeight="SemiBold" Margin="0,0,0,10" />
+                    <ListBox ItemsSource="{Binding Backup.Activity}" MinHeight="130" MaxHeight="240"
+                             Background="Transparent" BorderThickness="0" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Text}" Foreground="{Binding Foreground}"
+                                           FontFamily="Consolas" FontSize="12" TextWrapping="Wrap" Margin="0,2" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

@@ -1,0 +1,56 @@
+<UserControl x:Class="D2RSaveVault.Views.AboutPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignHeight="640" d:DesignWidth="800">
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+        <StackPanel Margin="24,16,24,24" MaxWidth="720" HorizontalAlignment="Left">
+            <TextBlock Text="About" Style="{StaticResource SectionTitle}" FontSize="26" />
+
+            <Border Style="{StaticResource GlassCard}" Margin="0,8,0,14">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="pack://application:,,,/Assets/AppIcon_256.png" Width="64" Height="64" />
+                    <StackPanel Margin="16,0,0,0" VerticalAlignment="Center">
+                        <TextBlock Text="D2R Save Vault" FontSize="20" FontWeight="Bold" />
+                        <TextBlock x:Name="VersionText" Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+                        <TextBlock Text="Created by ArcBee" Margin="0,3,0,0"
+                                   Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <Border Style="{StaticResource GlassCard}" Margin="0,0,0,14">
+                <StackPanel>
+                    <TextBlock Text="Built for one job: protecting D2R saves" FontWeight="SemiBold" Margin="0,0,0,8" />
+                    <TextBlock TextWrapping="Wrap" Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                               Text="D2R Save Vault creates full-folder snapshots of your Diablo II: Resurrected save directory and keeps only the newest number of backups you choose." />
+
+                    <TextBlock Text="D2R-bound automatic backups" FontWeight="SemiBold" Margin="0,16,0,6" />
+                    <TextBlock TextWrapping="Wrap" Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                               Text="With Bind backups to D2R enabled, Save Vault can launch with Windows and sit quietly in the tray. The scheduled backup timer starts when D2R starts and stops automatically when D2R exits. The app remains ready for the next game session." />
+
+                    <TextBlock Text="Safe restore" FontWeight="SemiBold" Margin="0,16,0,6" />
+                    <TextBlock TextWrapping="Wrap" Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                               Text="Restores require D2R to be closed, an explicit Restore click, and confirmation. Before replacing the current save folder, Save Vault creates a safety snapshot." />
+                </StackPanel>
+            </Border>
+
+            <Border Style="{StaticResource GlassCard}">
+                <StackPanel>
+                    <TextBlock Text="Author &amp; credits" FontWeight="SemiBold" Margin="0,0,0,8" />
+                    <TextBlock Text="ArcBee" FontSize="16" FontWeight="SemiBold" />
+                    <TextBlock Margin="0,5,0,0" TextWrapping="Wrap"
+                               Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                               Text="Author and project credits: ArcBee." />
+                </StackPanel>
+            </Border>
+
+            <TextBlock Margin="4,14,0,0" FontSize="11" TextWrapping="Wrap"
+                       Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                       Text="Not affiliated with or endorsed by Blizzard Entertainment. Diablo II: Resurrected is a trademark of Blizzard Entertainment, Inc." />
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

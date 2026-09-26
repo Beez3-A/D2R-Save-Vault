@@ -1,0 +1,46 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <Product>D2R Save Vault</Product>
+    <AssemblyTitle>D2R Save Vault</AssemblyTitle>
+    <Description>Automatic full-folder save backups for Diablo II: Resurrected.</Description>
+    <Authors>ArcBee</Authors>
+    <Company>ArcBee</Company>
+    <Copyright>Copyright © ArcBee 2026</Copyright>
+    <Version>1.0.1</Version>
+    <AssemblyVersion>1.0.1.0</AssemblyVersion>
+    <FileVersion>1.0.1.0</FileVersion>
+    <ApplicationIcon>Assets\AppIcon.ico</ApplicationIcon>
+    <RootNamespace>D2RSaveVault</RootNamespace>
+    <AssemblyName>D2RSaveVault</AssemblyName>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Using Remove="System.Windows.Forms" />
+    <Using Remove="System.Drawing" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="2.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+    <PackageReference Include="WPF-UI" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\AppIcon_256.png" />
+    <Resource Include="Assets\AppIcon.ico" />
+    <Resource Include="Assets\Backup\*.png" />
+  </ItemGroup>
+
+</Project>
