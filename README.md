@@ -237,6 +237,14 @@ See [`CHANGES.md`](CHANGES.md) for version history.
 
 **ArcBee**
 
+## Support the project
+
+If D2R Save Vault has been useful to you and you'd like to support continued development, you can buy me a coffee via PayPal:
+
+[Support D2R Save Vault on PayPal](https://paypal.me/arcbeematt?locale.x=en_US&country.x=ZA)
+
+Support is completely optional. The project will remain free and open source.
+
 ## License
 
 D2R Save Vault is released under the **GNU General Public License v3.0**.
