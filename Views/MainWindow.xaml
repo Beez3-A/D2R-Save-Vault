@@ -15,10 +15,10 @@
                  WindowBackdropType="Mica"
                  ExtendsContentIntoTitleBar="True"
                  Icon="pack://application:,,,/Assets/AppIcon.ico"
-                 Background="{StaticResource InfernalWindowBackgroundBrush}"
+                 Background="{DynamicResource InfernalWindowBackgroundBrush}"
                  WindowStartupLocation="CenterScreen">
 
-    <Grid Background="{StaticResource InfernalWindowBackgroundBrush}">
+    <Grid Background="{DynamicResource InfernalWindowBackgroundBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -57,7 +57,7 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <Border Grid.Column="0" Background="{StaticResource InfernalSidebarBrush}">
+            <Border Grid.Column="0" Background="{DynamicResource InfernalSidebarBrush}">
                 <Grid Margin="0,4,0,12">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />

@@ -19,11 +19,12 @@
         <GradientStop Color="#414141" Offset="0" />
         <GradientStop Color="#3D3D3D" Offset="1" />
     </LinearGradientBrush>
+    <SolidColorBrush x:Key="InfernalCardBorderBrush" Color="#505050" />
 
     <Style x:Key="GlassCard" TargetType="Border">
         <Setter Property="CornerRadius" Value="10" />
-        <Setter Property="Background" Value="{StaticResource InfernalCardBrush}" />
-        <Setter Property="BorderBrush" Value="#505050" />
+        <Setter Property="Background" Value="{DynamicResource InfernalCardBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource InfernalCardBorderBrush}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Padding" Value="16" />
     </Style>
