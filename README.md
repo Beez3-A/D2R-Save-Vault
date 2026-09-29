@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-  <strong>Windows x64 • Version 1.0.1 • Created by ArcBee</strong>
+  <strong>Windows x64 • Version 1.0.2 • Created by ArcBee</strong>
 </p>
 
 ---
@@ -56,7 +56,7 @@ Everything runs locally on your PC.
 2. Download the latest Windows archive, for example:
 
    ```text
-   D2R-Save-Vault-v1.0.1-Windows-x64.zip
+   D2R-Save-Vault-v1.0.2-Windows-x64.zip
    ```
 
 3. Extract the ZIP to a permanent folder, for example:
@@ -229,7 +229,7 @@ Please avoid attaching personal save files unless they are specifically needed t
 
 ## Version
 
-Current release: **v1.0.1**
+Current release: **v1.0.2**
 
 See [`CHANGES.md`](CHANGES.md) for version history.
 

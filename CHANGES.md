@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.2
+
+- Fixed Light mode so the custom Save Vault interface now follows the selected application theme correctly.
+- Updated the main window background, sidebar, cards, and card borders to use theme-aware colours.
+- Theme changes now update the custom interface immediately without requiring an application restart.
+- Preserved the existing Dark mode appearance while improving Light mode readability and consistency.
+
 ## 1.0.1
 
 - Restored a proper application title bar with **Minimize**, **Maximize/Restore**, and **Close** buttons.
